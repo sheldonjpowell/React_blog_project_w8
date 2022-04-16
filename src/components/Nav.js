@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-export default function Nav() {
+export default function Nav(props) {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container-fluid">
@@ -12,9 +12,18 @@ export default function Nav() {
             <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div className="navbar-nav">
                     <Link className="nav-link" to="/Home">Home</Link>
-                    <Link className="nav-link" to="/Signup">Sign Up</Link>
+                    <Link className="nav-link" to="/Blog">Blog</Link>
+                    {props.loggedIn ? (
+                    <>
+                    <Link className="nav-link" to="/Createpost">Create Post</Link>
+                    <Link className="nav-link" to="/Home" onClick={props.logUserOut}>Log Out</Link>
+                    </>
+                    ) : (
+                    <>
                     <Link className="nav-link" to="/Login">Log In</Link>
-                    <Link className="nav-link" to="/Logout">Log Out</Link>
+                    <Link className="nav-link" to="/Signup">Sign Up</Link>
+                    </>
+                    )}
                 </div>
             </div>
         </div>
