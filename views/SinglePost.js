@@ -5,18 +5,16 @@ import { useParams } from 'react-router-dom'
 
 export default function SinglePost(props) {
     const { postId } = useParams();
-    const [posts, setPosts] = useState(props);
-    // console.log(posts)
+    const [posts, setPosts] = useState({});
+    console.log(postId)
+    console.log(posts[postId])
     const [editMode, setEditMode] = useState(false)
-
-    useEffect( async () => {
-        const res = await fetch(`https://kekambas-blog.herokuapp.com//blog/posts?username=&password${postId}`)
-        const data = await res.json();
-        await setPosts(data)
-        console.log(data)
-        console.log(posts)
+    useEffect(()=> {
+        fetch(`https://kekambas-blog.herokuapp.com//blog/posts?username=&password${postId}`)
+        .then(res => res.json())
+        .then(data => setPosts(data))
+        console.log(`AfterUseEffect${postId}`)
     },[])
-   
 
     // const handleEditSubmit = (e) => {
     //     e.preventDefault();
@@ -29,7 +27,10 @@ export default function SinglePost(props) {
     //     let title = e.target.value
     //     let body = e.target.value
 
+    //     console.log('Are you here')
+
     //     let data = JSON.stringify({title, body})
+    //     console.log(data)
 
     //     fetch(`https://kekambas-blog.herokuapp.com//blog/edit-posts?username=&password${postId}`,{
     //         method: 'PUT',
@@ -43,37 +44,30 @@ export default function SinglePost(props) {
     
     return (
         <>
-        postId ? 
          
-        <PostCards posts={posts[postId]}  />: 
-        <div className="card bg-body" >
-            <div className="card-body">
-                <h5 className="card-title text-light">somethins</h5>
-                <h6 className="card-subtitle mb-2 text-muted">By: {} </h6>
-                <p className="card-text text-muted">{posts.content}</p>
-                <a to="#" className="card-link link-secondary ">reference</a>
-            </div> 
+        <PostCards posts={posts[postId]} />
+        {/* {posts.map(p => <PostCards posts={p} key={p.id} />)} */}
+        
 
-            {/* <div>
+            <div>
                 <button className='btn btn-info w-50' onClick={() => setEditMode(!editMode)}>Edit</button>
                 <button className='btn btn-danger w-50'>Delete</button>
                 {editMode ? (
                     <form>
-                        <h3 className='text-center'>Edit {post.title}</h3>
+                        <h3 className='text-center'>Edit {posts[postId].title}</h3>
                         <div className='form-group'>
                             <label htmlFor='title'>Title</label>
-                            <input type='text' name='title' className='form-control' defaultValue={post.title} />
+                            <input type='text' name='title' className='form-control' defaultValue={posts[postId].title} />
                             <label htmlFor='body'>Body</label>
-                            <input type='text' name='body' className='form-control' defaultValue={post.body} />
+                            <input type='text' name='body' className='form-control' defaultValue={posts[postId].body} />
                             <input type='submit' className='btn btn-dark w-100' value='Create Post' />
 
                         </div>
                     </form>
                 ): null}
-            // </div> */}
-             </div> 
+            </div>
         </>
         
     )
-} 
+}
 

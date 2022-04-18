@@ -55,7 +55,7 @@ export default class App extends Component{
                         <Route path='Login' element={<Login flashMessage={this.flashMessage} login={this.login} />}/>
                         <Route path='Blog' element={<Blog loggedIn={this.state.loggedIn} />}/>
                         <Route path='Createpost' element={<CreatePost flashMessage={this.flashMessage} loggedIn={this.state.loggedIn} />}/>
-                        <Route path='Blog/:postId' element={<SinglePost  />}/>
+                        <Route path='/Blog/:postId' element={<SinglePost flashMessage={this.flashMessage} loggedIn={this.state.loggedIn} />}/>
                         
                     </Routes>
                   
